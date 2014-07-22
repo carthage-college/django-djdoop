@@ -1,0 +1,78 @@
+{% extends "djkorra/base.html" %}
+{% load livewhale_api %}
+{% load ifusergroup %}
+{% block title %}Duplicate Merge &mdash; Carthage College{% endblock %}
+
+{% block extra_style %}
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
+    <link href="//www.carthage.edu/static/vendor/bootstrap-select/bootstrap-select.min.css" rel="stylesheet" type="text/css" />
+    <link href="//www.carthage.edu/static/vendor/css/grid-960.css" rel="stylesheet" type="text/css" />
+    <link href="/static/djdoop/css/main.css" rel="stylesheet" type="text/css" />
+{% endblock %}
+
+{% block extra_javascript %}
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+    <script src="//www.carthage.edu/static/vendor/bootstrap-select/bootstrap-select.min.js"></script>
+{% endblock %}
+
+{% block left_nav  %}
+    <h4>Duplicate Merge</h4>
+    <ul>
+        {% if not user.is_anonymous %}
+            <li>
+                <a href="{% url 'auth_logout' %}?next={{request.path}}">Logout</a>
+            </li>
+            {% ifusergroup Staff %}
+            <li>
+                <a href="{% url 'dashboard_home' %}">Dashboard</a>
+            </li>
+            {% endifusergroup %}
+            {% if user.is_superuser %}
+            <li>
+                <a href="/duplicate-merge/forms/admin/">Administration</a>
+            </li>
+            {% endif %}
+        {% else %}
+            <li>
+                <a href="{% url 'auth_login' %}?next={{request.path}}">Login</a>
+            </li>
+        {% endif %}
+    </ul>
+    {{nav.body}}
+{% endblock %}
+
+{% block sidebar %}{% endblock %}
+
+{% block content_head %}
+    <div id="spotlight-intro" class="cf">
+        <div class="large-12 medium-12">
+            <h1 id="page_title">
+           Duplicate Merge Tools
+            <small class="fright" style="margin-right:20px;">
+                <a href="{% url 'home' %}"><i class="fa fa-home fa-2x green"></i></a>
+            </small>
+            <span id="secondary-dropdown"></span>
+            </h1>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div>
+        <div id="student" class="clear slider-container">
+            <div class="large-12">
+                <p>
+                    Description...
+                </p>
+            </div>
+            
+            <ul class="slider-container" id="adult_student">
+                <li>
+                    list item
+                </li>
+            </ul>
+        </div>
+    </div>
+{% endblock %}
+
+{% block urchin %}{% endblock %}

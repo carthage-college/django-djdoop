@@ -1,0 +1,165 @@
+{% extends "home.html" %}
+{% block title %}
+    Health Insurance Information &mdash;
+    Health and Counseling &mdash;
+    Carthage College
+{% endblock %}
+{% block extra_style %}
+{{block.super}}
+<link rel="stylesheet" href="//www.carthage.edu/static/vendor/jquery/plugins/fancybox/jquery.fancybox.css" type="text/css" media="screen" />
+{% endblock %}
+{% block javascript %}
+<script src="//www.carthage.edu/static/vendor/jquery/plugins/validate/jquery.validate.min.js"></script>
+<script src="//www.carthage.edu/static/vendor/jquery/plugins/validate/additional-methods.min.js"></script>
+<script src="//www.carthage.edu/static/vendor/jquery/plugins/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript" charset="utf-8">
+$(function() {
+    $(".fancybox").fancybox({
+        maxWidth    : 800,
+        maxHeight   : 800,
+        fitToView   : false,
+        width       : '70%',
+        height      : '70%',
+        autoSize    : false,
+        closeClick  : false,
+        openEffect  : 'none',
+        closeEffect : 'none'
+    });
+    $('#id_opt_out').change(function() {
+        if($(this).is(":checked")) {
+            $('#insurance-policies').slideUp(200);
+            $('#secondary-box').slideUp(200);
+            {% if manager.athlete == 1 %}
+            $.fancybox.open([{
+                href : '#warning'
+            }]);
+            {% endif %}
+        }else{
+            $('#insurance-policies').slideDown(200);
+            $('#secondary-box').slideDown(200);
+        }
+    });
+    $('#id_second').change(function() {
+        if($(this).is(":checked")) {
+            $("input[id^='id_secondary']").removeClass("error required");
+            $('#secondary-form').slideUp(200);
+        }else{
+            $("input[id^='id_secondary']").addClass("required");
+            $('#secondary-form').slideDown(200);
+        }
+    });
+    // for updates to the form
+    if ( $('#id_primary-policy_type').val() == "State Insurance") {
+        $('#id_primary-policy_state').addClass("required");
+    }
+    if ( $('#id_secondary-policy_type').val() == "State Insurance") {
+        $('#id_secondary-policy_state').addClass("required");
+    }
+    $("#profile").validate();
+    $("select[id$='policy_type']").on('change', function() {
+        if( $(this).val() == "State Insurance") {
+            $(this).closest('li').next().find('select').addClass("required");
+        }
+    });
+    {% if oo %}
+        $('#insurance-policies').slideUp(200);
+        $('#secondary-box').slideUp(200);
+        $("#id_opt_out").prop("checked", true);
+    {% else %}
+        {% if not secondary and update %}
+            $("#id_second").prop("checked", true);
+            $("input[id^='id_secondary']").removeClass("error required");
+            $('#secondary-form').slideUp(200);
+        {% endif %}
+    {% endif %}
+});
+</script>
+{% endblock %}
+{% block left_nav %}{% endblock %}
+{% block page_content %}class="content large-11"{% endblock %}
+{% block content %}
+<div id="spotlight-wrap">
+<div class="spotlight forms-container">
+    <div class="large-7 medium-7 small-12">
+    <p>{{oo}}
+        Carthage College requires every full-time undergraduate student to
+        provide insurance and emergency contact information each academic
+        year. By completing this form, you are providing your permission
+        for Carthage College to release your insurance information to a
+        healthcare provider in the event that treatment is needed off-campus.
+    </p>
+    {% include "includes/required_text.html" %}
+    {% include "includes/errors_text.html" %}
+    </div>
+    <p class="cf">&nbsp;</p>
+    <form method="post" action="." type="actionForm" class="form" id="profile">
+        {% csrf_token %}
+        {% for hidden in form1.hidden_fields %}
+            {{ hidden }}
+        {% endfor %}
+        <input id="id_update" type="hidden"
+            value="{{update}}" name="update">
+        <div class="large-5 medium-7 small-7">
+            <label for="id_opt_out">
+                <input id="id_opt_out" type="checkbox" value="1" name="opt_out" />
+                <span style="color:#f00;">
+                    I attest that I do <strong><u>NOT</u></strong>
+                    have health insurance.
+                </span>
+            </label>
+        </div>
+        <div class="large-5 medium-7 small-7">
+            <div id="secondary-box">
+                <label for="id_second" style="display:block;">
+                    <input id="id_second" type="checkbox" value="1" name="second_policy" />
+                    <span style="color:#800;">
+                        I do <strong><u>NOT</u></strong>
+                        have a secondary policy.
+                    </span>
+                </label>
+            </div>
+        </div>
+        <div id="insurance-policies">
+            <div class="large-5 medium-7 small-7" id="primary-form">
+                <h2>Primary Insurance Policy</h2>
+                <fieldset class="blockLabels">
+                    <ol>
+                        {% for field in form1.visible_fields %}
+                            {% include "form_field.inc.html" %}
+                        {% endfor %}
+                    </ol>
+                </fieldset>
+            </div>
+            <div class="large-5 medium-7 small-7" id="secondary-form">
+                <h2>Secondary Insurance Policy</h2>
+                <fieldset class="blockLabels">
+                    <ol class="nobull">
+                        {% for field in form2.visible_fields %}
+                            {% include "form_field.inc.html" %}
+                        {% endfor %}
+                    </ol>
+                </fieldset>
+            </div>
+        </div>
+        <div class="large-11">
+            {% include "form_submit.inc.html" %}
+        </div>
+    </form>
+    <div id="warning" style="display:none;width:500px;">
+        <h2>Primary Insurance Required</h2>
+        <p>
+            All student-athletes must maintain primary insurance
+            that covers intercollegiate athletics and is applicable
+            to coverage in the state of Wisconsin. A copy of this
+            insurance card (front and back) needs to be on file with
+            Carthage Athletic Training.  Primary insurance can be
+            purchased from the Head Athletic Trainer during sport
+            check-in.
+        </p>
+        <p>
+            <a href="javascript:$.fancybox.close();">Close</a>
+        </p>
+    </div>
+</div>
+</div>
+{% endblock %}

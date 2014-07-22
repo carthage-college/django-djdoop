@@ -1,0 +1,16 @@
+{% extends "home.html" %}
+{% block title %}Login required &mdash; Health and Counseling &mdash; Carthage College{% endblock %}
+{% block javascript %}{% endblock %}
+{% block content %}
+<div class="span-21" style="background-color:#FCFAEB;">
+    <h1>Session expired</h1>
+    <p>Your sessions has expired.</p>
+    <p>
+        {% if django_debug %}
+        <a href="{% url 'home' %}?cid={{cid}}">Click here</a> to continue.
+        {% else %}
+        <a href="{% url 'login_required' %}">Click here</a> to continue.
+        {% endif %}
+    </p>
+</div>
+{% endblock %}
