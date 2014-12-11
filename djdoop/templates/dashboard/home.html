@@ -13,6 +13,14 @@
             margin-bottom: 1em;
             position: relative;
         }
+        .table-striped>tbody>tr:nth-child(4n+1)>td,
+        .table-striped>tbody>tr:nth-child(4n+2)>td
+        {    background-color: #fff;
+        }
+        .table-striped>tbody>tr:nth-child(4n+3)>td,
+        .table-striped>tbody>tr:nth-child(4n+4)>td
+        {    background-color: #eee;
+        }
     </style>
 {% endblock %}
 {% block extra_javascript %}
@@ -239,7 +247,7 @@
                 <div class="panel-heading"></div>
                 <!-- /.panel-heading -->
                 <div class="panel-body" id="students-data-panel">
-                    {% include "dashboard/students_data.inc.html" %}
+                    {% include "dashboard/profiled_pairs_data.inc.html" %}
                 </div>
                 <!-- /.panel-body -->
             </div>

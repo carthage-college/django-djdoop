@@ -1,0 +1,66 @@
+<div class="table-responsive">
+    <table class="table table-striped table-bordered table-hover" id="students-data">
+        <thead>
+            <tr>
+                <th>Analysis status</th>
+                <th>Name and ID</th>
+                <th>Office Added By</th>
+                <th>Date Added</th>
+                <th>Date Updated</th>
+                
+                <th>COM</th>
+                <th>ADM</th>
+                <th>DEV</th>
+                <th>FA</th>
+                <th>FIN</th>
+                <th>HR</th>
+                <th>MAT</th>
+                <th>REG</th>
+                <th>STU</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for p in pairs %}
+            <tr>
+                <td rowspan="2">
+                    {{p.analysis_status}}<br />
+                    <a href="">detail view</a>
+                </td>
+                
+                <td>{{p.fullname1}}, {{p.id1}}</td>
+                <td class="center">{{p.ofc_add_by1}}</td>
+                <td class="center">{{p.add_date1}}</td>
+                <td class="center">{{p.upd_date1}}</td>
+                
+                <td class="center">{{p.id1_com}}</td>
+                <td class="center">{{p.id1_adm}}</td>
+                <td class="center">{{p.id1_dev}}</td>
+                <td class="center">{{p.id1_fa}}</td>
+                <td class="center">{{p.id1_fin}}</td>
+                <td class="center">{{p.id1_hr}}</td>
+                <td class="center">{{p.id1_mat}}</td>
+                <td class="center">{{p.id1_reg}}</td>
+                <td class="center">{{p.id1_stu}}</td>
+                
+            </tr>
+            <tr>
+                <td>{{p.fullname2}}, {{p.id2}}</td>
+                <td class="center">{{p.ofc_add_by2}}</td>
+                <td class="center">{{p.add_date2}}</td>
+                <td class="center">{{p.upd_date2}}</td>
+                
+                <td class="center">{{p.id2_com}}</td>
+                <td class="center">{{p.id2_adm}}</td>
+                <td class="center">{{p.id2_dev}}</td>
+                <td class="center">{{p.id2_fa}}</td>
+                <td class="center">{{p.id2_fin}}</td>
+                <td class="center">{{p.id2_hr}}</td>
+                <td class="center">{{p.id2_mat}}</td>
+                <td class="center">{{p.id2_reg}}</td>
+                <td class="center">{{p.id2_stu}}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+<!-- /.table-responsive -->

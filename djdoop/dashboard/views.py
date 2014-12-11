@@ -14,7 +14,7 @@ from djzbar.utils.informix import do_sql as do_esql
 from djtools.decorators.auth import group_required
 #from djtools.utils.date import calculate_age
 
-@group_required('Staff')
+#@group_required('Staff')
 def home(request):
     """
     main dashboard screen populated with a list of profiled pairs
@@ -70,10 +70,10 @@ def panels(request,table,cid):
     c = RequestContext(request, {'data':data,'form':form})
     return t.render(c)
 
-@group_required('Medical Staff')
-def student_detail(request,cid=None,template="dashboard/student_detail.html"):
+# @group_required('Medical Staff')
+def profiled_pair_detail(request,cid=None,template="dashboard/profiled_pair_detail.html"):
     """
-    main method for displaying student data
+    main method for displaying profiled pair data
     """
     if not cid:
         # search form

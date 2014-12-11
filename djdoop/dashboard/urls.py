@@ -31,10 +31,10 @@ urlpatterns = patterns('djdoop.dashboard.views',
         r'^student/$',
         'student_detail', name="student_search"
     ),
-    # student detail
+    # profiled pair detail
     url(
-        r'^student/(?P<cid>\d+)/$',
-        'student_detail', name="student_detail"
+        r'^profiled_pair/(?P<cid>\d+)/$',
+        'profiled_pair_detail', name="profiled_pair_detail"
     ),
     # student detail print
     url(
